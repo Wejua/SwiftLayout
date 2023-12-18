@@ -3,7 +3,7 @@
 3. 根据布局规律套用对应方法，降低忘记有关约束的概率，比如label设置了left和top，但是忘记了right和屏幕右边的间距，在label内容很长的时候就超出了屏幕右边
 
 ### 例
-//nameLabel在self.view的里面（in)的上边，左边对齐，top偏离10,left偏离20 \n
+//nameLabel在self.view的里面（in)的上边，左边对齐，top偏离10,left偏离20
 `nameLabel.make.in.top(10).left(20).to(self.view)`
 
 //ageLabel在nameLabel的外面（out）的右边,基准线对齐，right偏离8, baseLine偏离1
