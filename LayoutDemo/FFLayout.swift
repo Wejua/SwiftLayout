@@ -48,7 +48,7 @@ class FFLayoutMaker {
     var topBottomRelativeSafeArea: Bool = false
     var view: UIView!
     var toView: UIView!
-    var edgeInsets: FFLayoutEdges?
+    var edgeInsets: FFLayoutEdgeInsets?
     
     func reset() {
         self.makeType = .remake
@@ -61,9 +61,9 @@ class FFLayoutMaker {
         self.edgeInsets = nil
     }
     
-    func addConstraints(edges: Bool = false) {
-        if let inset = self.edgeInsets {
-            self.addEdgesConstraints(inset: inset)
+    func addConstraints() {
+        if let insets = self.edgeInsets {
+            self.addEdgesConstraints(insets: insets)
         }
         else {
             self.switchSideAndAlignment()
@@ -164,18 +164,55 @@ class FFLayoutMaker {
             center(offsets: offsets, min_insets: insets, width: width, height: height)
         }
     }
-    private func addEdgesConstraints(inset: FFLayoutEdges) {
+    private func addEdgesConstraints(insets: FFLayoutEdgeInsets) {
         let maker: (ConstraintMaker) -> Void = { make in
             let toView = self.toView!
-            if self.topBottomRelativeSafeArea {
-                if let top = inset.top {make.top.equalTo(toView.snp.topMargin).offset(top)}
-                if let bottom = inset.bottom {make.bottom.equalTo(toView.snp.bottomMargin).offset(-bottom)}
-            } else {
-                if let top = inset.top {make.top.equalTo(toView.snp.top).offset(top)}
-                if let bottom = inset.bottom {make.bottom.equalTo(toView.snp.bottom).offset(-bottom)}
+            switch insets {
+            case .top(let value):
+                if self.topBottomRelativeSafeArea {
+                    make.top.equalTo(toView.snp.topMargin).offset(value)
+                } else {
+                    make.top.equalTo(toView.snp.top).offset(value)
+                }
+            case .left(let value):
+                make.left.equalTo(toView.snp.left).offset(value)
+            case .bottom(let value):
+                if self.topBottomRelativeSafeArea {
+                    make.bottom.equalTo(toView.snp.bottomMargin).offset(-value)
+                } else {
+                    make.bottom.equalTo(toView.snp.bottom).offset(-value)
+                }
+            case .right(let value):
+                make.right.equalTo(toView.snp.right).offset(-value)
+            case .horizontal(let value):
+                make.left.equalTo(toView.snp.left).offset(value)
+                make.right.equalTo(toView.snp.right).offset(-value)
+            case .vertical(let value):
+                if self.topBottomRelativeSafeArea {
+                    make.top.equalTo(toView.snp.topMargin).offset(value)
+                    make.bottom.equalTo(toView.snp.bottomMargin).offset(-value)
+                } else {
+                    make.top.equalTo(toView.snp.top).offset(value)
+                    make.bottom.equalTo(toView.snp.bottom).offset(-value)
+                }
+            case .all(let top, let left, let bottom, let right):
+                if let top = top {
+                    if self.topBottomRelativeSafeArea {
+                        make.top.equalTo(toView.snp.topMargin).offset(top)
+                    } else {
+                        make.top.equalTo(toView.snp.top).offset(top)
+                    }
+                }
+                if let left = left {make.left.equalTo(toView.snp.left).offset(left)}
+                if let bottom = bottom {
+                    if self.topBottomRelativeSafeArea {
+                        make.bottom.equalTo(toView.snp.bottomMargin).offset(-bottom)
+                    } else {
+                        make.bottom.equalTo(toView.snp.bottom).offset(-bottom)
+                    }
+                }
+                if let right = right {make.right.equalTo(toView.snp.right).offset(-right)}
             }
-            if let left = inset.left {make.left.equalTo(toView.snp.left).offset(left)}
-            if let right = inset.right {make.right.equalTo(toView.snp.right).offset(-right)}
         }
         switch self.makeType {
         case .remake:
@@ -671,11 +708,14 @@ struct FFLayoutOffset {
     var hori: CGFloat?
     var verti: CGFloat?
 }
-struct FFLayoutEdges {
-    var top: CGFloat?
-    var left: CGFloat?
-    var bottom: CGFloat?
-    var right: CGFloat?
+enum FFLayoutEdgeInsets: Hashable {
+    case all(_ top: CGFloat?, _ left: CGFloat?, _ bottom: CGFloat?, _ right: CGFloat?)
+    case top(CGFloat)
+    case left(CGFloat)
+    case bottom(CGFloat)
+    case right(CGFloat)
+    case horizontal(CGFloat)
+    case vertical(CGFloat)
 }
 
 extension UIView {
@@ -698,6 +738,7 @@ extension UIView {
         return FFLayoutInOut()
     }
 }
+
 struct FFLayoutInOut {
     var `in`: FFLayoutInSide {
         FFLayoutMaker.shared.inoutType = .in
@@ -709,45 +750,45 @@ struct FFLayoutInOut {
     }
 }
 struct FFLayoutOutSide {
-    func top(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func top(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .top(inset: inset)
         return FFLaoutHorizontalAlign()
     }
-    func left(_ inset: CGFloat? = nil) -> FFLaoutVerticalAlign {
+    func left(_ inset: CGFloat = 0) -> FFLaoutVerticalAlign {
         FFLayoutMaker.shared.sideType = .left(inset: inset)
         return FFLaoutVerticalAlign()
     }
-    func bottom(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func bottom(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .bottom(inset: inset)
         return FFLaoutHorizontalAlign()
     }
-    func right(_ inset: CGFloat? = nil) -> FFLaoutVerticalAlign {
+    func right(_ inset: CGFloat = 0) -> FFLaoutVerticalAlign {
         FFLayoutMaker.shared.sideType = .right(inset: inset)
         return FFLaoutVerticalAlign()
     }
 }
 struct FFLayoutInSide {
-    func top(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func top(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .top(inset: inset)
         return FFLaoutHorizontalAlign()
     }
-    func left(_ inset: CGFloat? = nil) -> FFLaoutVerticalAlign {
+    func left(_ inset: CGFloat = 0) -> FFLaoutVerticalAlign {
         FFLayoutMaker.shared.sideType = .left(inset: inset)
         return FFLaoutVerticalAlign()
     }
-    func bottom(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func bottom(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .bottom(inset: inset)
         return FFLaoutHorizontalAlign()
     }
-    func right(_ inset: CGFloat? = nil) -> FFLaoutVerticalAlign {
+    func right(_ inset: CGFloat = 0) -> FFLaoutVerticalAlign {
         FFLayoutMaker.shared.sideType = .right(inset: inset)
         return FFLaoutVerticalAlign()
     }
-    func bottomMargin(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func bottomMargin(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .bottomMargin(inset: inset)
         return FFLaoutHorizontalAlign()
     }
-    func topMargin(_ inset: CGFloat? = nil) -> FFLaoutHorizontalAlign {
+    func topMargin(_ inset: CGFloat = 0) -> FFLaoutHorizontalAlign {
         FFLayoutMaker.shared.sideType = .topMargin(inset: inset)
         return FFLaoutHorizontalAlign()
     }
@@ -763,30 +804,34 @@ struct FFLayoutInSide {
         FFLayoutMaker.shared.sideType = .center(offsets: nil, min_insets: .init(verti: min_topBottomInset), width: width, height: nil)
         return FFLayoutTo()
     }
-    func center(_ offsetX: CGFloat? = nil, _ offsetY: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func center(_ offsetX: CGFloat = 0, _ offsetY: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.sideType = .center(offsets: .init(hori: offsetX, verti: offsetY), min_insets: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func edges(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil, topBottomRelativeToMargin: Bool = true) -> FFLayoutTo {
-        FFLayoutMaker.shared.topBottomRelativeSafeArea = topBottomRelativeToMargin
-        FFLayoutMaker.shared.edgeInsets = FFLayoutEdges.init(top: top, left: left, bottom: bottom, right: right)
+    func edges(_ insets: FFLayoutEdgeInsets, safeArea: Bool = true) -> FFLayoutTo {
+        FFLayoutMaker.shared.topBottomRelativeSafeArea = safeArea
+//        if let top = top {insets.append(.top(top))}
+//        if let left = left {insets.append(.left(left))}
+//        if let bottom = bottom {insets.append(.bottom(bottom))}
+//        if let right = right {insets.append(.right(right))}
+        FFLayoutMaker.shared.edgeInsets = insets
         return FFLayoutTo()
     }
 }
 struct FFLaoutHorizontalAlign {
-    func left(_ inset: CGFloat? = nil, rightInset: CGFloat?, height: CGFloat? = nil) -> FFLayoutTo {
+    func left(_ inset: CGFloat = 0, rightInset: CGFloat?, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .left(inset: inset, rightInset: rightInset, width: nil, height: height)
         return FFLayoutTo()
     }
-    func left(_ inset: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func left(_ inset: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .left(inset: inset, rightInset: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func right(_ inset: CGFloat? = nil, leftInset: CGFloat?, height: CGFloat? = nil) -> FFLayoutTo {
+    func right(_ inset: CGFloat = 0, leftInset: CGFloat?, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .right(inset: inset, leftInset: leftInset, width: nil, height: height)
         return FFLayoutTo()
     }
-    func right(_ inset: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func right(_ inset: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .right(inset: inset, leftInset: nil, width: width, height: height)
         return FFLayoutTo()
     }
@@ -812,23 +857,23 @@ struct FFLaoutVerticalAlign {
         FFLayoutMaker.shared.alignType = .centerY(offset: offset, topBottomInset: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func bottom(_ inset: CGFloat? = nil, topInset: CGFloat?, width: CGFloat? = nil) -> FFLayoutTo {
+    func bottom(_ inset: CGFloat = 0, topInset: CGFloat?, width: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .bottom(inset: inset, topInset: topInset, width: width, height: nil)
         return FFLayoutTo()
     }
-    func bottom(_ inset: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func bottom(_ inset: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .bottom(inset: inset, topInset: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func top(_ inset: CGFloat? = nil, bottomInset: CGFloat?, width: CGFloat? = nil) -> FFLayoutTo {
+    func top(_ inset: CGFloat = 0, bottomInset: CGFloat?, width: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .top(inset: inset, bottomInset: bottomInset, width: width, height: nil)
         return FFLayoutTo()
     }
-    func top(_ inset: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func top(_ inset: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .top(inset: inset, bottomInset: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func baseLine(_ inset: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
+    func baseLine(_ inset: CGFloat = 0, width: CGFloat? = nil, height: CGFloat? = nil) -> FFLayoutTo {
         FFLayoutMaker.shared.alignType = .baseLine(inset: inset, width: width, height: height)
         return FFLayoutTo()
     }
