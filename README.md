@@ -4,14 +4,25 @@
 
 ### 例
 //nameLabel在self.view的里面（in)的上边，左边对齐，top偏离10,left偏离20
+
 `nameLabel.make.in.top(10).left(20).to(self.view)`
+
 //ageLabel在nameLabel的外面（out）的右边,基准线对齐，right偏离8, baseLine偏离1
+
 `ageLabel.make.out.right(8).baseLine(1).to(nameLabel)`
+
 //closeButton在self.view的外面（out）的右边,顶部对齐，right偏离20,top偏离16
+
 `closeButton.make.out.right(20).top(16).to(self.view)`
+
 //subView 在self.view的里面（in）中间,宽高为200,300
+
 `subView.make.in.center(width: 200, height: 300).to(self.view)`
+
 //contentView在self.view里面，top,left,bottom边距都为20, right边距约束不加
+
 `contentView.in.edges(.all(20, 20, 20, nil)).to(self.view)`
+
 //单加一条checkButton底部到self.view的底部的约束，间距为20，适用于增加一条底部约束撑起cell大小的时候
+
 `checkButton.make.in.edges(.bottom(20)).to(self.view)`
