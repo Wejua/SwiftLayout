@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		288423CF2B31A49A004C281D /* FFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288423CE2B31A49A004C281D /* FFButton.swift */; };
 		48010FE32B2D562F00F79CF2 /* FFLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE22B2D562F00F79CF2 /* FFLayout.swift */; };
 		48010FE52B30966F00F79CF2 /* FFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE42B30966F00F79CF2 /* FFView.swift */; };
 		48010FE72B30968400F79CF2 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE62B30968400F79CF2 /* FFLabel.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		288423CE2B31A49A004C281D /* FFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFButton.swift; sourceTree = "<group>"; };
 		48010FE22B2D562F00F79CF2 /* FFLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFLayout.swift; sourceTree = "<group>"; };
 		48010FE42B30966F00F79CF2 /* FFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFView.swift; sourceTree = "<group>"; };
 		48010FE62B30968400F79CF2 /* FFLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
@@ -52,6 +54,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		288423D02B31A4E5004C281D /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				48010FE42B30966F00F79CF2 /* FFView.swift */,
+				48010FE62B30968400F79CF2 /* FFLabel.swift */,
+				48010FEA2B3096D500F79CF2 /* FFStack.swift */,
+				48010FEC2B3096E900F79CF2 /* FFImage.swift */,
+				288423CE2B31A49A004C281D /* FFButton.swift */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
 		48F758032B25574300D1FBAE = {
 			isa = PBXGroup;
 			children = (
@@ -77,10 +91,7 @@
 				48F758112B25574300D1FBAE /* SceneDelegate.swift */,
 				48F758132B25574300D1FBAE /* ViewController.swift */,
 				48010FE22B2D562F00F79CF2 /* FFLayout.swift */,
-				48010FE42B30966F00F79CF2 /* FFView.swift */,
-				48010FE62B30968400F79CF2 /* FFLabel.swift */,
-				48010FEA2B3096D500F79CF2 /* FFStack.swift */,
-				48010FEC2B3096E900F79CF2 /* FFImage.swift */,
+				288423D02B31A4E5004C281D /* ViewComponents */,
 				48F758152B25574300D1FBAE /* Main.storyboard */,
 				48F758182B25574600D1FBAE /* Assets.xcassets */,
 				48F7581A2B25574600D1FBAE /* LaunchScreen.storyboard */,
@@ -223,6 +234,7 @@
 			files = (
 				48010FE72B30968400F79CF2 /* FFLabel.swift in Sources */,
 				48F758142B25574300D1FBAE /* ViewController.swift in Sources */,
+				288423CF2B31A49A004C281D /* FFButton.swift in Sources */,
 				48010FE52B30966F00F79CF2 /* FFView.swift in Sources */,
 				48010FEB2B3096D500F79CF2 /* FFStack.swift in Sources */,
 				48F758102B25574300D1FBAE /* AppDelegate.swift in Sources */,
