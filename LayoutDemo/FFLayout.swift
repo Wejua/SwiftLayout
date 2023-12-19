@@ -63,13 +63,40 @@ class FFLayoutMaker {
     
     func addConstraints() {
         if let insets = self.edgeInsets {
-            self.addEdgesConstraints(insets: insets)
+            if self.inoutType == .in {
+                self.addInEdgesConstraints(insets: insets)
+            } else {
+                self.addOutEdgeConstraints()
+            }
         }
         else {
             self.switchSideAndAlignment()
         }
     }
-    
+    private func addOutEdgeConstraints() {
+        let maker: (ConstraintMaker) -> Void = {make in
+            switch self.edgeInsets {
+            case .top(let val):
+                make.top.equalTo(self.toView.snp.bottom).offset(val)
+            case .left(let val):
+                make.left.equalTo(self.toView.snp.right).offset(val)
+            case .bottom(let val):
+                make.bottom.equalTo(self.toView.snp.top).offset(-val)
+            case .right(let val):
+                make.right.equalTo(self.toView.snp.left).offset(-val)
+            default:
+                break
+            }
+        }
+        switch self.makeType {
+        case .remake:
+            self.view.snp.remakeConstraints(maker)
+        case .make:
+            self.view.snp.makeConstraints(maker)
+        case .update:
+            self.view.snp.updateConstraints(maker)
+        }
+    }
     private func switchSideAndAlignment() {
         switch sideType {
         case .top(let offset1):
@@ -164,7 +191,7 @@ class FFLayoutMaker {
             center(offsets: offsets, min_insets: insets, width: width, height: height)
         }
     }
-    private func addEdgesConstraints(insets: FFLayoutEdgeInsets) {
+    private func addInEdgesConstraints(insets: FFLayoutEdgeInsets) {
         let maker: (ConstraintMaker) -> Void = { make in
             let toView = self.toView!
             switch insets {
@@ -731,6 +758,12 @@ enum FFLayoutEdgeInsets: Hashable {
     case horizontal(CGFloat)
     case vertical(CGFloat)
 }
+enum FFLayoutOutEdge: Hashable {
+    case top(CGFloat)
+    case left(CGFloat)
+    case bottom(CGFloat)
+    case right(CGFloat)
+}
 
 extension UIView {
     var make: FFLayoutInOut {
@@ -779,6 +812,19 @@ struct FFLayoutOutSide {
     func right(_ inset: CGFloat = 0) -> FFLaoutVerticalAlign {
         FFLayoutMaker.shared.sideType = .right(inset: inset)
         return FFLaoutVerticalAlign()
+    }
+    func edge(_ edge: FFLayoutOutEdge) -> FFLayoutTo {
+        switch edge {
+        case .top(let val):
+            FFLayoutMaker.shared.edgeInsets = .top(val)
+        case .left(let val):
+            FFLayoutMaker.shared.edgeInsets = .left(val)
+        case .bottom(let val):
+            FFLayoutMaker.shared.edgeInsets = .bottom(val)
+        case .right(let val):
+            FFLayoutMaker.shared.edgeInsets = .right(val)
+        }
+        return FFLayoutTo()
     }
 }
 struct FFLayoutInSide {
