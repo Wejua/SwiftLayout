@@ -822,7 +822,7 @@ struct FFLayoutInSide {
         FFLayoutMaker.shared.sideType = .center(offsets: .init(hori: offsetX, verti: offsetY), min_insets: nil, width: width, height: height)
         return FFLayoutTo()
     }
-    func edges(_ insets: FFLayoutEdgeInsets, safeArea: Bool = true) -> FFLayoutTo {
+    func edges(_ insets: FFLayoutEdgeInsets, safeArea: Bool = false) -> FFLayoutTo {
         FFLayoutMaker.shared.topBottomRelativeSafeArea = safeArea
 //        if let top = top {insets.append(.top(top))}
 //        if let left = left {insets.append(.left(left))}
