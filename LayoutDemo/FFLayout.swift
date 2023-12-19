@@ -212,6 +212,19 @@ class FFLayoutMaker {
                     }
                 }
                 if let right = right {make.right.equalTo(toView.snp.right).offset(-right)}
+            case .allZero:
+                if self.topBottomRelativeSafeArea {
+                    make.top.equalTo(toView.snp.topMargin)
+                } else {
+                    make.top.equalTo(toView.snp.top)
+                }
+                make.left.equalTo(toView.snp.left)
+                if self.topBottomRelativeSafeArea {
+                    make.bottom.equalTo(toView.snp.bottomMargin)
+                } else {
+                    make.bottom.equalTo(toView.snp.bottom)
+                }
+                make.right.equalTo(toView.snp.right)
             }
         }
         switch self.makeType {
@@ -710,6 +723,7 @@ struct FFLayoutOffset {
 }
 enum FFLayoutEdgeInsets: Hashable {
     case all(_ top: CGFloat?, _ left: CGFloat?, _ bottom: CGFloat?, _ right: CGFloat?)
+    case allZero
     case top(CGFloat)
     case left(CGFloat)
     case bottom(CGFloat)
