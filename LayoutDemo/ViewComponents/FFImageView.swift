@@ -1,5 +1,5 @@
 //
-//  FFLabel.swift
+//  FFImageView.swift
 //  LayoutDemo
 //
 //  Created by weijie.zhou on 2023/12/18.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FFLabel: UIView {
+class FFImageView: UIImageView {
     //MARK: - 属性
     var intrinsicSizeCustom: CGSize?
     
@@ -21,5 +21,4 @@ class FFLabel: UIView {
     }
     
     //MARK: - 方法
-
 }

@@ -949,4 +949,15 @@ struct FFLayoutTo {
     }
 }
 
+extension Double {
+    var fit: Double {
+        let SFrame = UIScreen.main.bounds
+        //按屏幕宽度算
+        let ratio_ff = SFrame.width / 375.0
+        //按对对角线算
+    //    let ratio_ff = hypot(SFrame.width, SFrame.height) / hypot(375.0, 812.0)
+        return self * ratio_ff
+    }
+}
+
 

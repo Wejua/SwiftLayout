@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		288423CF2B31A49A004C281D /* FFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288423CE2B31A49A004C281D /* FFButton.swift */; };
+		28A17B8A2B329C92001DB43A /* FF_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A17B892B329C92001DB43A /* FF_Button.swift */; };
 		48010FE32B2D562F00F79CF2 /* FFLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE22B2D562F00F79CF2 /* FFLayout.swift */; };
 		48010FE52B30966F00F79CF2 /* FFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE42B30966F00F79CF2 /* FFView.swift */; };
 		48010FE72B30968400F79CF2 /* FFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FE62B30968400F79CF2 /* FFLabel.swift */; };
 		48010FEB2B3096D500F79CF2 /* FFStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FEA2B3096D500F79CF2 /* FFStack.swift */; };
-		48010FED2B3096E900F79CF2 /* FFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FEC2B3096E900F79CF2 /* FFImage.swift */; };
+		48010FED2B3096E900F79CF2 /* FFImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48010FEC2B3096E900F79CF2 /* FFImageView.swift */; };
 		48F758102B25574300D1FBAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F7580F2B25574300D1FBAE /* AppDelegate.swift */; };
 		48F758122B25574300D1FBAE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F758112B25574300D1FBAE /* SceneDelegate.swift */; };
 		48F758142B25574300D1FBAE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F758132B25574300D1FBAE /* ViewController.swift */; };
@@ -24,11 +25,12 @@
 
 /* Begin PBXFileReference section */
 		288423CE2B31A49A004C281D /* FFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFButton.swift; sourceTree = "<group>"; };
+		28A17B892B329C92001DB43A /* FF_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FF_Button.swift; sourceTree = "<group>"; };
 		48010FE22B2D562F00F79CF2 /* FFLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFLayout.swift; sourceTree = "<group>"; };
 		48010FE42B30966F00F79CF2 /* FFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFView.swift; sourceTree = "<group>"; };
 		48010FE62B30968400F79CF2 /* FFLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFLabel.swift; sourceTree = "<group>"; };
 		48010FEA2B3096D500F79CF2 /* FFStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFStack.swift; sourceTree = "<group>"; };
-		48010FEC2B3096E900F79CF2 /* FFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFImage.swift; sourceTree = "<group>"; };
+		48010FEC2B3096E900F79CF2 /* FFImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFImageView.swift; sourceTree = "<group>"; };
 		48F7580C2B25574300D1FBAE /* LayoutDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LayoutDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F7580F2B25574300D1FBAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48F758112B25574300D1FBAE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,8 +61,9 @@
 			children = (
 				48010FE42B30966F00F79CF2 /* FFView.swift */,
 				48010FE62B30968400F79CF2 /* FFLabel.swift */,
+				28A17B892B329C92001DB43A /* FF_Button.swift */,
 				48010FEA2B3096D500F79CF2 /* FFStack.swift */,
-				48010FEC2B3096E900F79CF2 /* FFImage.swift */,
+				48010FEC2B3096E900F79CF2 /* FFImageView.swift */,
 				288423CE2B31A49A004C281D /* FFButton.swift */,
 			);
 			path = ViewComponents;
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48010FE72B30968400F79CF2 /* FFLabel.swift in Sources */,
+				28A17B8A2B329C92001DB43A /* FF_Button.swift in Sources */,
 				48F758142B25574300D1FBAE /* ViewController.swift in Sources */,
 				288423CF2B31A49A004C281D /* FFButton.swift in Sources */,
 				48010FE52B30966F00F79CF2 /* FFView.swift in Sources */,
@@ -240,7 +244,7 @@
 				48F758102B25574300D1FBAE /* AppDelegate.swift in Sources */,
 				48F758122B25574300D1FBAE /* SceneDelegate.swift in Sources */,
 				48010FE32B2D562F00F79CF2 /* FFLayout.swift in Sources */,
-				48010FED2B3096E900F79CF2 /* FFImage.swift in Sources */,
+				48010FED2B3096E900F79CF2 /* FFImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
