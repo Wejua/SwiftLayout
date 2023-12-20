@@ -45,6 +45,10 @@ class FFHStack: FFView {
             self.addSubview(views[i].view)
             if i == 0 {
                 layoutFistView(view: views[i].view)
+            } else if i == views.count - 1 {
+                
+            } else {
+                
             }
         }
     }
@@ -56,14 +60,17 @@ class FFHStack: FFView {
     private func layoutFistView(view: FFView) {
         switch align {
         case .top:
-//            view.make.in.left().top(
-            break
+            view.make.in.left().top().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
         case .center:
-            break;
+            view.make.in.left().centerY().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
         case .bottom:
-            break;
+            view.make.in.left().bottom().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
         case .baseline:
-            break;
+            view.make.in.left().baseLine().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
         }
     }
 }
