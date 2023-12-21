@@ -45,16 +45,51 @@ class FFHStack: FFView {
             self.addSubview(views[i].view)
             if i == 0 {
                 layoutFistView(view: views[i].view)
-            } else if i == views.count - 1 {
-                
             } else {
-                
+                layoutOtherView(view: views[i].view, preV: views[i-1])
+            }
+            if i == views.count - 1 {
+                self.layoutLastView(view: views[i].view)
             }
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func layoutOtherView(view: FFView, preV: FFStackSubView) {
+        switch align {
+        case .top:
+            view.make.out.right(preV.space).top(preV.offset).to(preV.view)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .center:
+            view.make.out.right(preV.space).centerY(preV.offset).to(preV.view)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .bottom:
+            view.make.out.right(preV.space).bottom(preV.offset).to(preV.view)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .baseline:
+            view.make.out.right(preV.space).baseLine(preV.offset).to(preV.view)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        }
+    }
+    
+    private func layoutLastView(view: FFView) {
+        switch align {
+        case .top:
+            view.make.in.right().top().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .center:
+            view.make.in.right().centerY().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .bottom:
+            view.make.in.right().bottom().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        case .baseline:
+            view.make.in.right().baseLine().to(self)
+            view.make.in.edges(.vertical(0), relation: .less).to(self)
+        }
     }
     
     private func layoutFistView(view: FFView) {

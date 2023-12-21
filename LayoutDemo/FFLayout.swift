@@ -407,9 +407,9 @@ class FFLayoutMaker {
             case .equal:
                 make.top.equalTo(toView.snp.topMargin).offset(value)
             case .less:
-                make.top.lessThanOrEqualTo(toView.snp.topMargin).offset(value)
-            case .greater:
                 make.top.greaterThanOrEqualTo(toView.snp.topMargin).offset(value)
+            case .greater:
+                make.top.lessThanOrEqualTo(toView.snp.topMargin).offset(value)
             }
             switch self.relation {
             case .equal:
